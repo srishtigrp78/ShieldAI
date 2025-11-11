@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "agent/src/main/java",
+        "dashboard/src/main/java",
+        "shared/src/main/java"
+    ],
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.compile.nullAnalysis.mode": "automatic"
+}

@@ -1,0 +1,14 @@
+📧 SHIELDAI TEST EMAIL
+========================
+To: test@example.com
+From: noreply@shieldai.com
+Subject: ShieldAI Test Email
+Date: 2025-09-07T16:04:12.214535
+
+Dear HR Team,
+
+This is a test email from ShieldAI system.
+Email notifications are working correctly!
+
+Best regards,
+ShieldAI System

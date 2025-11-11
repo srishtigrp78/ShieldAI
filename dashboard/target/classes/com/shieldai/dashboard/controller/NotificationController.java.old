@@ -1,0 +1,60 @@
+package com.shieldai.dashboard.controller;
+
+import com.shieldai.dashboard.entity.NotificationEntity;
+import com.shieldai.dashboard.service.NotificationService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/notifications")
+@CrossOrigin(origins = "http://localhost:3000")
+public class NotificationController {
+    private final NotificationService notificationService;
+
+    public NotificationController(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<NotificationEntity>> getAllNotifications() {
+        List<NotificationEntity> notifications = notificationService.getAllNotifications();
+        return ResponseEntity.ok(notifications);
+    }
+
+    @GetMapping("/unread")
+    public ResponseEntity<List<NotificationEntity>> getUnreadNotifications() {
+        List<NotificationEntity> notifications = notificationService.getUnreadNotifications();
+        return ResponseEntity.ok(notifications);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Map<String, Long>> getUnreadCount() {
+        long count = notificationService.getUnreadCount();
+        return ResponseEntity.ok(Map.of("unreadCount", count));
+    }
+
+    @PostMapping
+    public ResponseEntity<NotificationEntity> createNotification(@RequestBody Map<String, String> request) {
+        String message = request.get("message");
+        NotificationEntity notification = notificationService.createNotification(message);
+        return ResponseEntity.ok(notification);
+    }
+
+    @PostMapping("/{id}/read")
+    public ResponseEntity<Map<String, String>> markAsRead(@PathVariable Long id) {
+        boolean success = notificationService.markAsRead(id);
+        if (success) {
+            return ResponseEntity.ok(Map.of("status", "success"));
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/read-all")
+    public ResponseEntity<Map<String, String>> markAllAsRead() {
+        notificationService.markAllAsRead();
+        return ResponseEntity.ok(Map.of("status", "success"));
+    }
+}

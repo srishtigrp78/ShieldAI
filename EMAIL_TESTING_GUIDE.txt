@@ -1,0 +1,73 @@
+📧 SHIELDAI EMAIL SYSTEM TESTING GUIDE
+=====================================
+
+🔧 NEW IMPLEMENTATION: File-Based Email System
+- Emails are saved as text files instead of being sent via SMTP
+- No complex email server configuration needed
+- Easy to test and verify email content
+
+📁 HOW IT WORKS:
+- Test emails saved to: dashboard/emails/test_email_YYYY-MM-DD_HH-mm-ss.txt
+- Alert emails saved to: dashboard/emails/alert_candidateId_YYYY-MM-DD_HH-mm-ss.txt
+
+🧪 TESTING STEPS:
+
+1. START SYSTEM:
+   cd /Users/srishtigupta/ShieldAI/dashboard
+   mvn spring-boot:run
+   
+   (In another terminal)
+   cd /Users/srishtigupta/ShieldAI/frontend
+   npm start
+
+2. TEST EMAIL FUNCTIONALITY:
+   - Go to: http://localhost:3000/settings
+   - Enter email: hr@company.com
+   - Click "Send Test Email"
+   - Should see: "✅ Test email sent to hr@company.com. Check emails/ folder for the email file."
+
+3. VERIFY EMAIL WAS CREATED:
+   cd /Users/srishtigupta/ShieldAI/dashboard
+   ls emails/
+   
+   You should see: test_email_2025-09-07_15-30-45.txt (or similar)
+
+4. READ THE EMAIL:
+   cat emails/test_email_*.txt
+   
+   Expected content:
+   📧 SHIELDAI TEST EMAIL
+   ========================
+   To: hr@company.com
+   From: noreply@shieldai.com
+   Subject: ShieldAI Test Email
+   Date: 2025-09-07T15:30:45
+   
+   Dear HR Team,
+   
+   This is a test email from ShieldAI system.
+   Email notifications are working correctly!
+   
+   Best regards,
+   ShieldAI System
+   ========================
+
+🚨 FOR REAL AI DETECTION ALERTS:
+When the system detects AI tools, alert emails will be automatically saved to:
+dashboard/emails/alert_candidate-001_YYYY-MM-DD_HH-mm-ss.txt
+
+📋 TROUBLESHOOTING:
+- If no emails/ folder exists, the system creates it automatically
+- If test fails, check dashboard console for error messages
+- Email files are plain text - can be opened with any text editor
+
+✅ ADVANTAGES OF THIS APPROACH:
+- No email server configuration needed
+- Easy to test and verify
+- All emails are preserved as files
+- Can be easily integrated with real email later
+- Works on any system without dependencies
+
+🔄 TO SWITCH TO REAL EMAIL LATER:
+Simply modify EmailService.java to use actual email sending instead of file writing.
+The rest of the system remains unchanged.

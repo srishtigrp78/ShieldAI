@@ -1,0 +1,66 @@
+📧 GMAIL EMAIL SETUP FOR guptya.sri2411@gmail.com
+=================================================
+
+🔧 SETUP STEPS:
+
+1. ENABLE 2-FACTOR AUTHENTICATION:
+   - Go to: https://myaccount.google.com/security
+   - Turn on 2-Step Verification
+   - Follow the setup process
+
+2. GENERATE APP PASSWORD:
+   - Go to: https://myaccount.google.com/apppasswords
+   - Select app: "Mail"
+   - Select device: "Other (custom name)" → Enter "ShieldAI"
+   - Click "Generate"
+   - Copy the 16-character password (e.g., "abcd efgh ijkl mnop")
+
+3. UPDATE CONFIGURATION:
+   Edit: /Users/srishtigupta/ShieldAI/dashboard/src/main/resources/application.properties
+   
+   Change these lines:
+   spring.mail.username=your-email@gmail.com
+   spring.mail.password=your-app-password
+   
+   To:
+   spring.mail.username=guptya.sri2411@gmail.com
+   spring.mail.password=abcd efgh ijkl mnop
+
+4. TEST THE SYSTEM:
+   cd /Users/srishtigupta/ShieldAI/dashboard
+   mvn spring-boot:run
+   
+   # In another terminal:
+   curl -X POST http://localhost:8080/api/settings/test-email \
+        -H "Content-Type: application/json" \
+        -d '{"email":"guptya.sri2411@gmail.com"}'
+
+5. CHECK YOUR GMAIL:
+   - Go to: https://gmail.com
+   - Look for email from "noreply@shieldai.com"
+   - Subject: "📧 ShieldAI Test Email"
+
+🌐 UI TESTING:
+1. Start frontend: cd frontend && npm start
+2. Go to: http://localhost:3000/settings
+3. Enter email: guptya.sri2411@gmail.com
+4. Click "Send Test Email"
+5. Check your Gmail inbox!
+
+✅ SUCCESS INDICATORS:
+- API response: "✅ Real email sent to guptya.sri2411@gmail.com and saved to emails/test_email_..."
+- Console shows: "✅ Real email sent to: guptya.sri2411@gmail.com"
+- Email appears in your Gmail inbox
+- Backup file created in emails/ folder
+
+❌ TROUBLESHOOTING:
+- If "Less secure app access" error: Use App Password instead
+- If "Authentication failed": Double-check App Password
+- If no email received: Check Gmail spam folder
+- If still fails: System falls back to file-only mode
+
+🚨 FOR REAL AI DETECTION ALERTS:
+Once configured, the system will automatically send real Gmail alerts to guptya.sri2411@gmail.com when AI tools are detected during candidate assessments.
+
+🔒 SECURITY NOTE:
+Never commit the App Password to version control. In production, use environment variables.

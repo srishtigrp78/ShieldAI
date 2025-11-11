@@ -1,0 +1,107 @@
+package com.shieldai.dashboard.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+@RestController
+@RequestMapping("/api/settings")
+@CrossOrigin(origins = "*")
+public class SettingsController {
+    
+    public SettingsController() {
+        // Create emails directory
+        new java.io.File("emails").mkdirs();
+    }
+
+    @GetMapping
+    public ResponseEntity<Map<String, Object>> getSettings() {
+        Map<String, Object> response = new HashMap<>();
+        
+        // Mock settings data
+        Map<String, Object> settings = new HashMap<>();
+        settings.put("confidenceThreshold", 0.8);
+        settings.put("monitoredTools", Arrays.asList("ChatGPT", "Claude", "Copilot", "Gemini"));
+        settings.put("dashboardAlerts", true);
+        settings.put("emailAlerts", false);
+        
+        Map<String, String> profile = new HashMap<>();
+        profile.put("name", "HR Admin");
+        profile.put("email", "hr@company.com");
+        
+        response.put("settings", settings);
+        response.put("profile", profile);
+        
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping
+    public ResponseEntity<Map<String, String>> updateSettings(@RequestBody Map<String, Object> request) {
+        // In real implementation, save to database
+        System.out.println("Settings updated: " + request);
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Settings updated successfully");
+        
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<Map<String, String>> addUser(@RequestBody Map<String, String> user) {
+        // Mock user creation
+        System.out.println("User added: " + user);
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User added successfully");
+        
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<Map<String, String>> removeUser(@PathVariable String userId) {
+        // Mock user removal
+        System.out.println("User removed: " + userId);
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "User removed successfully");
+        
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/test-email")
+    public ResponseEntity<Map<String, String>> sendTestEmail(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        
+        // Simple file-based email system
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        String filename = "emails/test_email_" + timestamp + ".txt";
+        
+        String emailContent = "📧 SHIELDAI TEST EMAIL\n" +
+                "========================\n" +
+                "To: " + email + "\n" +
+                "From: noreply@shieldai.com\n" +
+                "Subject: ShieldAI Test Email\n" +
+                "Date: " + LocalDateTime.now() + "\n\n" +
+                "Dear HR Team,\n\n" +
+                "This is a test email from ShieldAI system.\n" +
+                "Email notifications are working correctly!\n\n" +
+                "For real Gmail delivery, check the setup guide.\n\n" +
+                "Best regards,\n" +
+                "ShieldAI System\n";
+        
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(emailContent);
+            System.out.println("✅ Email saved to: " + filename);
+        } catch (IOException e) {
+            System.err.println("Failed to write email: " + e.getMessage());
+        }
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "✅ Test email saved to " + filename + " - Check emails/ folder");
+        return ResponseEntity.ok(response);
+    }
+}
