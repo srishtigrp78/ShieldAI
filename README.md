@@ -47,28 +47,7 @@ ShieldAI/
 - PostgreSQL
 - Maven
 
-### Run Backend
-```bash
-cd dashboard
-mvn spring-boot:run -Dspring.profiles.active=local
-```
-
-### Run Frontend
-```bash
-cd frontend
-npm install
-npm start
-```
-
-### Run Agent
-```bash
-cd agent
-mvn package
-java -javaagent:target/agent-1.0-SNAPSHOT.jar -jar your-app.jar
-```
-
-## Deployment
-
-- Backend: AWS Elastic Beanstalk
-- Database: AWS RDS PostgreSQL
-- Frontend: Static hosting (S3 + CloudFront or Elastic Beanstalk)
+## Getting Started
+Setup and run instructions are available for authorized contributors only.
+Please contact the repository owner for access. 
+Email: gupta.sri2411@gmail.com
