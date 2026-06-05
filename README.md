@@ -1,5 +1,5 @@
 # ShieldAI
-ShieldAI is an AI tool monitoring and detection system designed for organizations to track the usage of AI tools (ChatGPT, GitHub Copilot, Claude, etc.) by candidates or employees during assessments or work sessions.
+ShieldAI is an AI tool monitoring and detection system designed for organizations to track the usage of AI tools (ChatGPT, GitHub Copilot, Claude, etc.) by candidates or employees during assessments or interview sessions.
 
 ## Tech Stack
 
